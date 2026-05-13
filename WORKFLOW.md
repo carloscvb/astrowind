@@ -17,18 +17,21 @@ carloscvb/landing-cliente-y ← proyecto real
 
 ## 1. Crear proyecto nuevo
 
+**Con script (recomendado):** desde el directorio de la plantilla:
+
+```powershell
+.\scripts\nuevo-proyecto.ps1 -nombre "landing-cliente-x" -repo "carloscvb/landing-cliente-x"
+```
+
+El script clona la plantilla, configura remotes, instala deps y hace el push inicial.
+
+**Manual:**
+
 ```bash
-# Clonar plantilla
 git clone https://github.com/carloscvb/astrowind.git nombre-proyecto
 cd nombre-proyecto
-
-# Redirigir origin al nuevo repo (crearlo primero en GitHub)
 git remote set-url origin https://github.com/carloscvb/nombre-proyecto.git
-
-# Guardar plantilla como upstream para futuras actualizaciones
 git remote add upstream https://github.com/carloscvb/astrowind.git
-
-# Push inicial
 git push -u origin main
 ```
 
@@ -129,12 +132,23 @@ git push origin main
 
 ## 6. Traer updates de plantilla a un proyecto existente
 
+**Con script (recomendado):** desde la raíz del proyecto cliente:
+
+```powershell
+.\scripts\actualizar-desde-plantilla.ps1
+```
+
+El script verifica que no hay cambios sin commitear, muestra los commits nuevos, hace el merge, reinstala deps y corre el check.
+
+**Manual:**
+
 ```bash
-# En el proyecto cliente
-git fetch upstream        # upstream apunta a carloscvb/astrowind
+git fetch upstream
 git merge upstream/main
 npm install
 npm run check
 ```
 
-Si hay conflictos → resolver manualmente, priorizar cambios del cliente en `config.yaml`, `navigation.ts`, `index.astro`.
+Si hay conflictos:
+- **Priorizar TUS cambios:** `config.yaml`, `navigation.ts`, `index.astro`
+- **Priorizar plantilla:** componentes, utils, dependencias
